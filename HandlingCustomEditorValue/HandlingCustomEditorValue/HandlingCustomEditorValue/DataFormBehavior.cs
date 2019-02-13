@@ -41,17 +41,17 @@ namespace HandlingCustomEditorValue
 
         protected override void OnWireEvents(Entry view)
         {
-            view.TextChanged += View_TextChanged;
-            view.Focused += View_Focused;
-            view.Unfocused += View_Unfocused;
+            view.TextChanged += OnViewTextChanged;
+            view.Focused += OnViewFocused;
+            view.Unfocused += OnViewUnfocused;
         }
 
-        private void View_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnViewPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             OnValidateValue(sender as Entry);
         }
 
-        private void View_Focused(object sender, FocusEventArgs e)
+        private void OnViewFocused(object sender, FocusEventArgs e)
         {
             var view = (sender as Entry);
             view.TextColor = Color.Green;
@@ -61,7 +61,7 @@ namespace HandlingCustomEditorValue
         {
             return this.DataForm.Validate("Age");
         }
-        private void View_Unfocused(object sender, FocusEventArgs e)
+        private void OnViewUnfocused(object sender, FocusEventArgs e)
         {
             var view = sender as Entry;
             view.TextColor = Color.Red;
@@ -72,7 +72,7 @@ namespace HandlingCustomEditorValue
             this.OnCommitValue(view);
             OnValidateValue(sender as Entry);
         }
-        private void View_TextChanged(object sender, TextChangedEventArgs e)
+        private void OnViewTextChanged(object sender, TextChangedEventArgs e)
         {
             var view = sender as Entry;
             if (DataForm.CommitMode == Syncfusion.XForms.DataForm.CommitMode.PropertyChanged || DataForm.ValidationMode == ValidationMode.PropertyChanged)
@@ -89,9 +89,9 @@ namespace HandlingCustomEditorValue
 
         protected override void OnUnWireEvents(Entry view)
         {
-            view.TextChanged -= View_TextChanged;
-            view.Focused -= View_Focused;
-            view.Unfocused -= View_Unfocused;
+            view.TextChanged -= OnViewTextChanged;
+            view.Focused -= OnViewFocused;
+            view.Unfocused -= OnViewUnfocused;
         }
     }
     public class ContactForm : INotifyPropertyChanged
